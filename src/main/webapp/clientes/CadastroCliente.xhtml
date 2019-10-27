@@ -1,0 +1,43 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Novo cliente</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Novo cliente</h1>
+
+		<p:toolbar style="margin-top: 20px">
+			<p:toolbarGroup>
+				<p:button value="Novo" outcome="/clientes/CadastroCliente" />
+				<p:commandButton value="Salvar" id="botaoSalvar" />
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:button value="Pesquisa" />
+			</p:toolbarGroup>
+		</p:toolbar>
+
+		<p:panelGrid columns="2" id="painel"
+			style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+			<p:outputLabel value="Nome" for="nome" />
+			<p:inputText id="nome" size="60" maxlength="80" />
+
+			<p:outputLabel for="tipo" value="Tipo" />
+			<p:selectOneRadio id="tipo"
+				unselectable="true">
+				<f:selectItem itemLabel="Física" itemValue="f" />
+				<f:selectItem itemLabel="Jurídica" itemValue="j" />
+			</p:selectOneRadio>
+
+			<p:outputLabel value="CNPJ" for="numeroTipo" />
+			<p:inputText id="numeroTipo" size="20" maxlength="22"/>
+
+			<p:outputLabel value="E-mail" for="email" />
+			<p:inputText id="email" size="40" maxlength="60" />
+		</p:panelGrid>
+	</ui:define>
+
+</ui:composition>
