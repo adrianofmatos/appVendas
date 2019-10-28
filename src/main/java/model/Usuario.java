@@ -7,12 +7,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import enumeration.TipoPessoa;
 
 @Entity
-public class Cliente implements Serializable {
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,9 +18,8 @@ public class Cliente implements Serializable {
 	private Long id;
 	private String nome;
 	private String email;
-	private String documentoReceitaFederal;
-	private TipoPessoa tipo;
-	private List<Endereco> enderecos = new ArrayList<>();
+	private String senha;
+	private List<Grupo> grupos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -49,29 +45,20 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getDocumentoReceitaFederal() {
-		return documentoReceitaFederal;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setDocumentoReceitaFederal(String documentoReceitaFederal) {
-		this.documentoReceitaFederal = documentoReceitaFederal;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
-	public TipoPessoa getTipo() {
-		return tipo;
+	public List<Grupo> getGrupos() {
+		return grupos;
 	}
 
-	public void setTipo(TipoPessoa tipo) {
-		this.tipo = tipo;
-	}
-
-	@Transient
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 
 	@Override
@@ -90,7 +77,7 @@ public class Cliente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Usuario other = (Usuario) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -98,5 +85,5 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }

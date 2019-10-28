@@ -1,18 +1,13 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import enumeration.TipoPessoa;
 
 @Entity
-public class Cliente implements Serializable {
+public class Grupo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,10 +15,7 @@ public class Cliente implements Serializable {
 	@GeneratedValue()
 	private Long id;
 	private String nome;
-	private String email;
-	private String documentoReceitaFederal;
-	private TipoPessoa tipo;
-	private List<Endereco> enderecos = new ArrayList<>();
+	private String descricao;
 
 	public Long getId() {
 		return id;
@@ -41,37 +33,12 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getDocumentoReceitaFederal() {
-		return documentoReceitaFederal;
-	}
-
-	public void setDocumentoReceitaFederal(String documentoReceitaFederal) {
-		this.documentoReceitaFederal = documentoReceitaFederal;
-	}
-
-	public TipoPessoa getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoPessoa tipo) {
-		this.tipo = tipo;
-	}
-
-	@Transient
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
@@ -90,7 +57,7 @@ public class Cliente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Grupo other = (Grupo) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
