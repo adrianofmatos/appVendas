@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import enumeration.TipoPessoa;
 
 @Entity
+@Table(name = "cliente")
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,10 +25,20 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue()
 	private Long id;
+	
+	@Column(nullable = false, length = 100)
 	private String nome;
+	
+	@Column(nullable = false, length = 255)
 	private String email;
+
+	@Column(name="doc_receita_federal", nullable = false, length = 15)
 	private String documentoReceitaFederal;
+	
+	@Enumerated(EnumType.ORDINAL)
+	@Column(nullable = false, length = 2)
 	private TipoPessoa tipo;
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 

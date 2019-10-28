@@ -32,6 +32,7 @@ public class TesteCliente {
 		endereco.setLogradouro("Rua das Abobóras");
 		endereco.setNumero("111");
 		endereco.setCidade("Camaçari");
+		endereco.setUf("BA");
 		endereco.setCep("34800-00");
 		endereco.setCliente(cliente);
 		
