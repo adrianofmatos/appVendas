@@ -18,7 +18,7 @@ public class Categoria implements Serializable {
 	private Long id;
 	private String descricao;
 	private Categoria categoriaPai;
-	private List<Categoria> subcategorias = new ArrayList<>();
+	// private List<Categoria> subcategorias = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -44,14 +44,14 @@ public class Categoria implements Serializable {
 		this.categoriaPai = categoriaPai;
 	}
 
-	public List<Categoria> getSubcategorias() {
-		return subcategorias;
-	}
-
-	public void setSubcategorias(List<Categoria> subcategorias) {
-		this.subcategorias = subcategorias;
-	}
-
+	/*
+	 * public List<Categoria> getSubcategorias() { return subcategorias; }
+	 * 
+	 * public void setSubcategorias(List<Categoria> subcategorias) {
+	 * this.subcategorias = subcategorias; }
+	 * 
+	 */	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

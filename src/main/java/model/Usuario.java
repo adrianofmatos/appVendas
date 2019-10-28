@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Usuario implements Serializable {
@@ -19,7 +20,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String email;
 	private String senha;
-	private List<Grupo> grupos = new ArrayList<>();
+	//private List<Grupo> grupos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -53,15 +54,12 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public List<Grupo> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
-	}
-
-	@Override
+	/*
+	 * @Transient public List<Grupo> getGrupos() { return grupos; }
+	 * 
+	 * public void setGrupos(List<Grupo> grupos) { this.grupos = grupos; }
+	 * 
+	 */	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
