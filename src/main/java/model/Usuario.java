@@ -4,23 +4,40 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue()
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false, length = 80)
 	private String nome;
+	
+	@Column(nullable = false, unique = true, length = 255)
 	private String email;
+	
+	@Column(nullable = false, length = 255)
 	private String senha;
-	//private List<Grupo> grupos = new ArrayList<>();
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name="usuario_id"),
+			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	private List<Grupo> grupos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -54,12 +71,15 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	/*
-	 * @Transient public List<Grupo> getGrupos() { return grupos; }
-	 * 
-	 * public void setGrupos(List<Grupo> grupos) { this.grupos = grupos; }
-	 * 
-	 */	@Override
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -83,5 +103,5 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }
