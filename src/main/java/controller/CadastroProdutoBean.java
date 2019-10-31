@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 
 import model.Categoria;
 import model.Produto;
+import repository.Categorias;
 
 @Named
 @ViewScoped
@@ -20,7 +21,7 @@ public class CadastroProdutoBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private EntityManager manager;
+	private Categorias categorias; 
 	
 	private Produto produto;
 	
@@ -34,7 +35,7 @@ public class CadastroProdutoBean implements Serializable{
 		//EntityManagerFactory factory = Persistence.createEntityManagerFactory("PedidoPU");
 		//EntityManager manager = factory.createEntityManager();
 		
-		categoriaRaizes =  manager.createQuery("from Categoria", Categoria.class).getResultList();
+		categoriaRaizes =  categorias.buscarCategoriaRaizes();
 		
 		//manager.close();
 	}
