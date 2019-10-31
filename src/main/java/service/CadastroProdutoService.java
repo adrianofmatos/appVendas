@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import model.Produto;
 import repository.Produtos;
+import util.jpa.Transactional;
 
 public class CadastroProdutoService implements Serializable {
 
@@ -14,6 +15,7 @@ public class CadastroProdutoService implements Serializable {
 	@Inject
 	private Produtos produtos;
 	
+	@Transactional
 	public Produto salvar(Produto produto) {
 		Produto produtoExistente = produtos.buscarPorSku(produto.getSku());
 		
