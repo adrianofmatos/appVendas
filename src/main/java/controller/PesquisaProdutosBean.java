@@ -1,30 +1,41 @@
 package controller;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
-@RequestScoped
-public class PesquisaProdutosBean {
+import model.Produto;
+import repository.Produtos;
+import repository.filter.ProdutoFilter;
 
-	private List<Integer> produtosFiltados;
+@Named
+@ViewScoped
+public class PesquisaProdutosBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private Produtos produtos; 
+	
+	private ProdutoFilter filtro;
+	private List<Produto> produtosFiltados;
+	
 	public PesquisaProdutosBean() {
-		produtosFiltados = new ArrayList<>();
-		for (int i = 0; i < 50; i++) {
-			produtosFiltados.add(i);
-		}
-	}
-
-	public List<Integer> getProdutosFiltados() {
-		return produtosFiltados;
-	}
-
-	public void setProdutosFiltados(List<Integer> produtosFiltados) {
-		this.produtosFiltados = produtosFiltados;
+		filtro = new ProdutoFilter();
 	}
 	
+	public void pesquisar() {
+		produtosFiltados = produtos.filtrados(filtro);
+	}
+	
+	public List<Produto> getProdutosFiltados() {
+		return produtosFiltados;
+	}
+	
+	public ProdutoFilter getFiltro() {
+		return filtro;
+	}
 }
