@@ -15,6 +15,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -25,9 +28,11 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	@Column(nullable = false, length = 80)
 	private String nome;
 	
+	@Email
 	@Column(nullable = false, unique = true, length = 255)
 	private String email;
 	
