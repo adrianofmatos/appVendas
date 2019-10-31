@@ -17,11 +17,7 @@ public class Produtos implements Serializable {
 	private EntityManager manager;
 	
 	public Produto guardar(Produto produto) {
-		EntityTransaction trx = manager.getTransaction();
-		trx.begin();
-		produto = manager.merge(produto);
-		trx.commit();
-		return produto;
+		return manager.merge(produto);
 	}
 
 	public Produto buscarPorSku(String sku) {
