@@ -47,7 +47,7 @@ public class Produtos implements Serializable {
 			criteria.add(Restrictions.eq("sku",filtro.getSku()));
 		}
 
-		if (StringUtils.isNotBlank(filtro.getSku())) {
+		if (StringUtils.isNotBlank(filtro.getNome())) {
 			criteria.add(Restrictions.ilike("nome",filtro.getNome(), MatchMode.ANYWHERE));
 		}
 		
