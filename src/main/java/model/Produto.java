@@ -37,11 +37,11 @@ public class Produto implements Serializable {
 	@Column(nullable = false, length = 20, unique = true)
 	private String sku;
 	
-	@NotNull
+	@NotNull(message = "é obrigatório")
 	@Column(name="valor_unitario", nullable = false, precision = 14, scale = 2)
 	private BigDecimal valorUnitario;
 	
-	@NotNull @Min(0) @Max(999999999)
+	@NotNull @Min(0) @Max(value = 999999999, message = "tem o valor muito alto")
 	@Column(name="quantidade_estoque", nullable = false, length = 9)
 	private Integer quantidadeEstoque;
 	
