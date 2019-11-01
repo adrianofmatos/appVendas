@@ -28,11 +28,9 @@ public class CadastroProdutoBean implements Serializable{
 	private CadastroProdutoService cadastroProdutoService;
 	
 	private Produto produto;
-
-	@NotNull
 	private Categoria categoriaPai;
 	
-	private List<Categoria> categoriaRaizes;
+	private List<Categoria> categoriasRaizes;
 	private List<Categoria> subcategorias;
 	
 	public CadastroProdutoBean() {
@@ -40,21 +38,19 @@ public class CadastroProdutoBean implements Serializable{
 	}
 	
 	public void inicializar() {
-		//EntityManagerFactory factory = Persistence.createEntityManagerFactory("PedidoPU");
-		//EntityManager manager = factory.createEntityManager();
-		System.out.println("Inicializando...");
-
-		if (FacesUtil.isNotPostBack()) {
-			categoriaRaizes =  categorias.buscarCategoriaRaizes();
+		if (FacesUtil.isNotPostBack() ) {
+			categoriasRaizes = categorias.buscarCategoriaRaizes();
+			
+			if (this.categoriaPai != null) {
+				carregarSubcategorias();
+			}
 		}
-		
-		//manager.close();
 	}
 	
 	public void carregarSubcategorias() {
 		subcategorias = categorias.buscarSubCategoriasDe(categoriaPai);
 	}
-
+	
 	private void limpar() {
 		produto = new Produto();
 		categoriaPai = null;
@@ -64,25 +60,27 @@ public class CadastroProdutoBean implements Serializable{
 	public void salvar() {
 		this.produto = cadastroProdutoService.salvar(this.produto);
 		limpar();
-		FacesUtil.addEInfoMessage("Produto salvo com successo!");
+		
+		FacesUtil.addInfoMessage("Produto salvo com sucesso!");
 	}
 
 	public Produto getProduto() {
 		return produto;
 	}
-
+	
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+		
+		if (this.produto != null) {
+			this.categoriaPai = this.produto.getCategoria().getCategoriaPai();
+		}
 	}
 
-	public List<Categoria> getCategoriaRaizes() {
-		return categoriaRaizes;
+	public List<Categoria> getCategoriasRaizes() {
+		return categoriasRaizes;
 	}
 
-	public Categorias getCategorias() {
-		return categorias;
-	}
-
+	@NotNull
 	public Categoria getCategoriaPai() {
 		return categoriaPai;
 	}
@@ -95,4 +93,8 @@ public class CadastroProdutoBean implements Serializable{
 		return subcategorias;
 	}
 	
+	public boolean isEditando() {
+		return this.produto.getId() != null;
+	}
+
 }

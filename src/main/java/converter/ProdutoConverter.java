@@ -7,27 +7,27 @@ import javax.faces.convert.FacesConverter;
 
 import org.apache.commons.lang3.StringUtils;
 
-import model.Categoria;
-import repository.Categorias;
+import model.Produto;
+import repository.Produtos;
 import util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Categoria.class)
-public class CategoriaConverter implements Converter {
+@FacesConverter(forClass = Produto.class)
+public class ProdutoConverter implements Converter {
 
 	//@Inject
-	private Categorias categorias;
+	private Produtos produtos;
 	
-	public CategoriaConverter() {
-		categorias = CDIServiceLocator.getBean(Categorias.class);
+	public ProdutoConverter() {
+		produtos = CDIServiceLocator.getBean(Produtos.class);
 	} 
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Categoria retorno = null;
+		Produto retorno = null;
 		
 		if (StringUtils.isNotEmpty(value)) {
 			Long id = new Long(value);
-			retorno = categorias.buscarPorId(id);
+			retorno = produtos.buscarPorId(id);
 		}
 		
 		return retorno;
@@ -36,8 +36,10 @@ public class CategoriaConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
-			return ((Categoria) value).getId().toString();
+			Produto produto = (Produto) value;
+			return produto.getId() == null ? null : produto.getId().toString();
 		}
+		
 		return "";
 	}
 	

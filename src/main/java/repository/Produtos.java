@@ -14,6 +14,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import model.Categoria;
 import model.Produto;
 import repository.filter.ProdutoFilter;
 
@@ -52,6 +53,11 @@ public class Produtos implements Serializable {
 		}
 		
 		return criteria.addOrder(Order.asc("nome")).list();
+	}
+
+	public Produto buscarPorId(Long id) {
+		return manager.find(Produto.class, id);
+
 	}
 
 }
