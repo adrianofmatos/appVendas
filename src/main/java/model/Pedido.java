@@ -62,8 +62,8 @@ public class Pedido implements Serializable {
 	private BigDecimal valorTotal;
 	
 	@NotNull
-	@Enumerated(EnumType.ORDINAL)
-	@Column(nullable = false, length = 2)
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	private StatusPedido status;
 
 	@NotNull
