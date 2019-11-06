@@ -8,30 +8,43 @@
 	<ui:define name="titulo">Novo cliente</ui:define>
 
 	<ui:define name="corpo">
-		<h1>Novo cliente</h1>
+		<f:metadata>
+			<f:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}" />
+			<!-- 			<f:event listener="#{cadastroUsuarioBean.inicializar}"
+				type="preRenderView" />
+ -->
+		</f:metadata>
+	
+		<h:form>
+			<h1>#{cadastroUsuarioBean.editando ? 'Edição de Usuário' : 'Novo usuário'}</h1>
 
-		<p:toolbar style="margin-top: 20px">
-			<p:toolbarGroup>
-				<p:button value="Novo" outcome="/usuarios/CadastroUsuario" />
-				<p:commandButton value="Salvar" id="botaoSalvar" />
-			</p:toolbarGroup>
-			<p:toolbarGroup align="right">
-				<p:button value="Pesquisa" />
-			</p:toolbarGroup>
-		</p:toolbar>
+			<p:messages autoUpdate="true" closable="true"/>
 
-		<p:panelGrid columns="2" id="painel"
-			style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
-			<p:outputLabel value="Nome" for="nome" />
-			<p:inputText id="nome" size="60" maxlength="80" />
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="/usuarios/CadastroUsuario" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+					action="#{cadastroUsuarioBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" />
+				</p:toolbarGroup>
+			</p:toolbar>
 
-			<p:outputLabel value="E-mail" for="email" />
-			<p:inputText id="email" size="40" maxlength="60" />
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="60" maxlength="80" value="#{cadastroUsuarioBean.usuario.nome}" />
 
-			<p:outputLabel value="Senha" />
-			<p:password size="30" />
+				<p:outputLabel value="E-mail" for="email" />
+				<p:inputText id="email" size="40" maxlength="60" value="#{cadastroUsuarioBean.usuario.email}" />
 
-		</p:panelGrid>
+				<p:outputLabel value="Senha" for="senha" />
+				<p:password id="senha" size="30" value="#{cadastroUsuarioBean.usuario.senha}" />
+
+			</p:panelGrid>
+		</h:form>
+
 	</ui:define>
 
 </ui:composition>
