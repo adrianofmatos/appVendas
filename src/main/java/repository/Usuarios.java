@@ -74,5 +74,11 @@ public class Usuarios implements Serializable {
 		return manager.find(Usuario.class, id);
 
 	}
+	
+	public List<Usuario> vendedores() {
+		// TODO FIltrar abesnas vendedores (por um grupo especifico)
+		return this.manager.createQuery("from Usuario", Usuario.class)
+				.getResultList();
+	}
 
 }

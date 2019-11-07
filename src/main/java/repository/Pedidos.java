@@ -73,4 +73,8 @@ public class Pedidos implements Serializable {
 
 	}
 
+	public Pedido guardar(Pedido pedido) {
+		return this.manager.merge(pedido);
+	}
+
 }
