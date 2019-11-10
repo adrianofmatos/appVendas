@@ -7,15 +7,21 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
+
 import enumeration.FormaPagamento;
 import model.Cliente;
 import model.EnderecoEntrega;
+import model.ItemPedido;
 import model.Pedido;
+import model.Produto;
 import model.Usuario;
 import repository.Clientes;
+import repository.Produtos;
 import repository.Usuarios;
 import service.CadastroPedidoService;
 import util.jsf.FacesUtil;
+import validation.SKU;
 
 @Named
 @ViewScoped
@@ -30,10 +36,18 @@ public class CadastroPedidoBean implements Serializable {
 	private Clientes clientes;
 	
 	@Inject
+	private Produtos produtos;
+	
+	@Inject
 	private CadastroPedidoService cadastroPedidoService;
+	
+	@SKU
+	private String sku;
 
 	private Pedido pedido;
 	private List<Usuario> vendedores;
+	
+	private Produto produtoLinhaEditavel;
 
 	private void limpar() {
 		pedido = new Pedido();
@@ -47,6 +61,8 @@ public class CadastroPedidoBean implements Serializable {
 	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
 			this.vendedores = this.usuarios.vendedores();
+			
+			this.pedido.adicionarItemVazio();
 			
 			this.recalcularPedido(); // não sei se é necessário
 		}
@@ -62,6 +78,51 @@ public class CadastroPedidoBean implements Serializable {
 		if (this.pedido != null)  { // Não sei se é necessário
 			this.pedido.recalcularValorTotal();
 		}
+	}
+	
+	public void carregarProdutoLinhaEditavel() {
+		ItemPedido item = this.pedido.getItens().get(0);
+		
+		if (this.produtoLinhaEditavel != null) {
+			if (this.existeitemComProduto(this.produtoLinhaEditavel)) {
+				FacesUtil.addErrorMessage("Já existe um item no pedido com o produto informado.");
+			} else {
+				item.setProduto(this.produtoLinhaEditavel);
+				item.setValorUnitario(this.produtoLinhaEditavel.getValorUnitario());
+				
+				this.pedido.adicionarItemVazio();
+				this.produtoLinhaEditavel = null;
+				this.sku = null;
+				
+				this.pedido.recalcularValorTotal();
+			}
+		}
+	}
+	
+	private boolean existeitemComProduto(Produto produto) {
+		boolean existeItem = false;
+		
+		for (ItemPedido item : this.getPedido().getItens()) {
+			
+			if (produto.equals(item.getProduto())) {
+				existeItem = true;
+				break;
+			}
+			
+		}
+		
+		return existeItem;	
+	}
+
+	public void carregarProdutoPorSku() {
+		if (StringUtils.isNotEmpty(this.sku)) {
+			this.produtoLinhaEditavel = this.produtos.buscarPorSku(this.sku);
+			this.carregarProdutoLinhaEditavel();
+		}
+	}
+	
+	public List<Produto> completarProduto(String nome) {
+		return this.produtos.porNome(nome);
 	}
 	
 	public FormaPagamento[] getFormasPagamento() {
@@ -86,6 +147,22 @@ public class CadastroPedidoBean implements Serializable {
 	
 	public boolean isEditando() {
 		return this.pedido.getId() != null;
+	}
+
+	public Produto getProdutoLinhaEditavel() {
+		return produtoLinhaEditavel;
+	}
+
+	public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
+		this.produtoLinhaEditavel = produtoLinhaEditavel;
+	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
 	}
 	
 }

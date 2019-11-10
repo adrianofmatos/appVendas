@@ -15,7 +15,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import model.Categoria;
 import model.Produto;
 import repository.filter.ProdutoFilter;
 import service.NegocioException;
@@ -74,6 +73,11 @@ public class Produtos implements Serializable {
 	public Produto buscarPorId(Long id) {
 		return manager.find(Produto.class, id);
 
+	}
+
+	public List<Produto> porNome(String nome) {
+		return this.manager.createQuery("from Produto where upper(nome) like :nome", Produto.class)
+				.setParameter("nome", nome.toUpperCase() + "%").getResultList();
 	}
 
 }
