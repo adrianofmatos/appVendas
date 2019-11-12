@@ -294,4 +294,15 @@ public class Pedido implements Serializable {
 		return StatusPedido.CANCELADO.equals(this.getStatus());
 	}
 
+	@Transient
+	public boolean isNaoAlteravel() {
+		// TODO Auto-generated method stub
+		return !this.isAlteravel();
+	}
+
+	@Transient
+	private boolean isAlteravel() {
+		return this.isOrcamento();
+	}
+
 }
