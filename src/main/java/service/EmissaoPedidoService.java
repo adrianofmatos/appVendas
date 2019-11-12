@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import enumeration.StatusPedido;
 import model.Pedido;
 import repository.Pedidos;
+import util.jpa.Transactional;
 
 public class EmissaoPedidoService implements Serializable {
 
@@ -20,7 +21,8 @@ public class EmissaoPedidoService implements Serializable {
 	
 	@Inject
 	private Pedidos pedidos;
-	
+
+	@Transactional
 	public Pedido emitir(Pedido pedido) {
 		pedido = this.cadastroPedidoService.salvar(pedido);
 		
