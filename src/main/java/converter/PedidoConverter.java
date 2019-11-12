@@ -5,8 +5,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import model.Pedido;
 import repository.Pedidos;
 import util.cdi.CDIServiceLocator;
@@ -19,15 +17,15 @@ public class PedidoConverter implements Converter {
 	
 	public PedidoConverter() {
 		pedidos = CDIServiceLocator.getBean(Pedidos.class);
-	} 
+	}
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Pedido retorno = null;
 		
-		if (StringUtils.isNotEmpty(value)) {
+		if (value != null) {
 			Long id = new Long(value);
-			retorno = pedidos.buscarPorId(id);
+			retorno = pedidos.porId(id);
 		}
 		
 		return retorno;
@@ -42,5 +40,5 @@ public class PedidoConverter implements Converter {
 		
 		return "";
 	}
-	
+
 }

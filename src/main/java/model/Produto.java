@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +17,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import service.NegocioException;
 import validation.SKU;
 
 @Entity
@@ -26,32 +26,15 @@ public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
-	@Size(max = 80)
-	@Column(nullable = false, length = 80)
 	private String nome;
-	
-	@NotBlank @SKU
-	@Column(nullable = false, length = 20, unique = true)
 	private String sku;
-	
-	@NotNull(message = "é obrigatório")
-	@Column(name="valor_unitario", nullable = false, precision = 14, scale = 2)
 	private BigDecimal valorUnitario;
-	
-	@NotNull @Min(0) @Max(value = 999999999, message = "tem o valor muito alto")
-	@Column(name="quantidade_estoque", nullable = false, length = 9)
 	private Integer quantidadeEstoque;
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
 
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -60,6 +43,9 @@ public class Produto implements Serializable {
 		this.id = id;
 	}
 
+	@NotBlank
+	@Size(max = 80)
+	@Column(nullable = false, length = 80)
 	public String getNome() {
 		return nome;
 	}
@@ -68,14 +54,18 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
+	@NotBlank @SKU
+	@Column(nullable = false, length = 20, unique = true)
 	public String getSku() {
 		return sku;
 	}
 
 	public void setSku(String sku) {
-		this.sku = sku;
+		this.sku = sku == null ? null : sku.toUpperCase();
 	}
 
+	@NotNull(message = "é obrigatório")
+	@Column(name="valor_unitario", nullable = false, precision = 10, scale = 2)
 	public BigDecimal getValorUnitario() {
 		return valorUnitario;
 	}
@@ -84,6 +74,8 @@ public class Produto implements Serializable {
 		this.valorUnitario = valorUnitario;
 	}
 
+	@NotNull @Min(0) @Max(value = 9999, message = "tem um valor muito alto")
+	@Column(name="quantidade_estoque", nullable = false, length = 5)
 	public Integer getQuantidadeEstoque() {
 		return quantidadeEstoque;
 	}
@@ -92,6 +84,9 @@ public class Produto implements Serializable {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "categoria_id", nullable = false)
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -123,6 +118,17 @@ public class Produto implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public void baixarEstoque(Integer quantidade) {
+		int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
+		
+		if (novaQuantidade < 0) {
+			throw new NegocioException("Não há disponibilidade no estoque de "
+					+ quantidade + " itens do produto " + this.getSku() + ".");
+		}
+		
+		this.setQuantidadeEstoque(novaQuantidade);
 	}
 
 }

@@ -1,5 +1,6 @@
 package repository;
 
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,13 +20,14 @@ import repository.filter.PedidoFilter;
 public class Pedidos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private EntityManager manager;
 
 	@SuppressWarnings("unchecked")
 	public List<Pedido> filtrados(PedidoFilter filtro) {
-		Session session = manager.unwrap(Session.class);
+		Session session = this.manager.unwrap(Session.class);
+		
 		Criteria criteria = session.createCriteria(Pedido.class)
 				// fazemos uma associação (join) com cliente e nomeamos como "c"
 				.createAlias("cliente", "c")
@@ -68,13 +70,12 @@ public class Pedidos implements Serializable {
 		return criteria.addOrder(Order.asc("id")).list();
 	}
 
-	public Pedido buscarPorId(Long id) {
-		return manager.find(Pedido.class, id);
-
-	}
-
 	public Pedido guardar(Pedido pedido) {
 		return this.manager.merge(pedido);
 	}
 
+	public Pedido porId(Long id) {
+		return this.manager.find(Pedido.class, id);
+	}
+	
 }

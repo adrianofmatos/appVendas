@@ -19,15 +19,15 @@ public class ProdutoConverter implements Converter {
 	
 	public ProdutoConverter() {
 		produtos = CDIServiceLocator.getBean(Produtos.class);
-	} 
+	}
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Produto retorno = null;
 		
-		if (StringUtils.isNotEmpty(value)) {
+		if (value != null) {
 			Long id = new Long(value);
-			retorno = produtos.buscarPorId(id);
+			retorno = produtos.porId(id);
 		}
 		
 		return retorno;
@@ -42,5 +42,5 @@ public class ProdutoConverter implements Converter {
 		
 		return "";
 	}
-	
+
 }

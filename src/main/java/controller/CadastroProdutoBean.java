@@ -20,7 +20,7 @@ import util.jsf.FacesUtil;
 public class CadastroProdutoBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private Categorias categorias;
 	
@@ -38,8 +38,8 @@ public class CadastroProdutoBean implements Serializable{
 	}
 	
 	public void inicializar() {
-		if (FacesUtil.isNotPostBack() ) {
-			categoriasRaizes = categorias.buscarCategoriaRaizes();
+		if (FacesUtil.isNotPostback()) {
+			categoriasRaizes = categorias.raizes();
 			
 			if (this.categoriaPai != null) {
 				carregarSubcategorias();
@@ -48,7 +48,7 @@ public class CadastroProdutoBean implements Serializable{
 	}
 	
 	public void carregarSubcategorias() {
-		subcategorias = categorias.buscarSubCategoriasDe(categoriaPai);
+		subcategorias = categorias.subcategoriasDe(categoriaPai);
 	}
 	
 	private void limpar() {

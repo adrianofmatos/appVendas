@@ -5,8 +5,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import model.Categoria;
 import repository.Categorias;
 import util.cdi.CDIServiceLocator;
@@ -19,15 +17,15 @@ public class CategoriaConverter implements Converter {
 	
 	public CategoriaConverter() {
 		categorias = CDIServiceLocator.getBean(Categorias.class);
-	} 
+	}
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Categoria retorno = null;
 		
-		if (StringUtils.isNotEmpty(value)) {
+		if (value != null) {
 			Long id = new Long(value);
-			retorno = categorias.buscarPorId(id);
+			retorno = categorias.porId(id);
 		}
 		
 		return retorno;
@@ -38,7 +36,8 @@ public class CategoriaConverter implements Converter {
 		if (value != null) {
 			return ((Categoria) value).getId().toString();
 		}
+		
 		return "";
 	}
-	
+
 }
