@@ -4,7 +4,7 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
 public class ViewContextExtension implements Extension
 {

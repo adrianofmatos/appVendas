@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PreDestroyViewMapEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
 public class ViewScopedContext implements Context, SystemEventListener {
 	
