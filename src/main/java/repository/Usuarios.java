@@ -44,7 +44,7 @@ public class Usuarios implements Serializable {
 		
 	}
 
-	public Usuario buscarPorEmail(String email) {
+	public Usuario porEmail(String email) {
 		try {
 			return manager.createQuery("from Usuario where upper(email) = :email", Usuario.class)
 					.setParameter("email", email.toUpperCase())
