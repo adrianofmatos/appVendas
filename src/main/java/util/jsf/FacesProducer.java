@@ -21,11 +21,12 @@ public class FacesProducer {
 		return getFacesContext().getExternalContext();
 	}
 	
-	@Produces
-	@RequestScoped
-	public HttpServletRequest getHttpServletRequest() {
-		return ((HttpServletRequest) getExternalContext().getRequest());	
-	}
+	/*
+	 * @Produces
+	 * 
+	 * @RequestScoped public HttpServletRequest getHttpServletRequest() { return
+	 * ((HttpServletRequest) getExternalContext().getRequest()); }
+	 */
 	
 	@Produces
 	@RequestScoped
