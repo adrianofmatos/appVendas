@@ -22,39 +22,39 @@ public class PesquisaProdutosBean implements Serializable {
 	private Produtos produtos; 
 
 	private ProdutoFilter filtro;
-	private List<Produto> produtosFiltados;
+	private List<Produto> produtosFiltrados;
 	
-	private Produto produtosSelecionado;
+	private Produto produtoSelecionado;
 	
 	public PesquisaProdutosBean() {
 		filtro = new ProdutoFilter();
 	}
 	
 	public void excluir() {
-		produtos.remover(produtosSelecionado);
-		produtosFiltados.remove(produtosSelecionado);
+		produtos.remover(produtoSelecionado);
+		produtosFiltrados.remove(produtoSelecionado);
 		
-		FacesUtil.addInfoMessage("Produto " + produtosSelecionado.getSku() 
+		FacesUtil.addInfoMessage("Produto " + produtoSelecionado.getSku() 
 			+ " exclído com sucesso");
 	}
 	
 	public void pesquisar() {
-		produtosFiltados = produtos.filtrados(filtro);
+		produtosFiltrados = produtos.filtrados(filtro);
 	}
 	
-	public List<Produto> getProdutosFiltados() {
-		return produtosFiltados;
+	public List<Produto> getProdutosFiltrados() {
+		return produtosFiltrados;
 	}
 	
 	public ProdutoFilter getFiltro() {
 		return filtro;
 	}
 
-	public Produto getProdutosSelecionado() {
-		return produtosSelecionado;
+	public Produto getProdutoSelecionado() {
+		return produtoSelecionado;
 	}
 
-	public void setProdutosSelecionado(Produto produtosSelecionado) {
-		this.produtosSelecionado = produtosSelecionado;
+	public void setProdutoSelecionado(Produto produtoSelecionado) {
+		this.produtoSelecionado = produtoSelecionado;
 	}
 }
