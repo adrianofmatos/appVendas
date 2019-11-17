@@ -43,7 +43,15 @@
 			<version>4.3.11.Final</version>
 			<scope>compile</scope>
 		</dependency>
-
+		
+		<!-- Pool de conexoes com C3P0 -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-c3p0</artifactId>
+		    <version>4.3.11.Final</version>
+		    <scope>compile</scope>
+		</dependency>
+		
 		<!-- Driver JDBC do MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
