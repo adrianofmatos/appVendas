@@ -10,6 +10,7 @@ import javax.inject.Named;
 import model.Produto;
 import repository.Produtos;
 import repository.filter.ProdutoFilter;
+import service.NegocioException;
 import util.jsf.FacesUtil;
 
 @Named
@@ -31,11 +32,15 @@ public class PesquisaProdutosBean implements Serializable {
 	}
 	
 	public void excluir() {
+		try {
 		produtos.remover(produtoSelecionado);
 		produtosFiltrados.remove(produtoSelecionado);
 		
 		FacesUtil.addInfoMessage("Produto " + produtoSelecionado.getSku() 
 			+ " exclído com sucesso");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
+		}
 	}
 	
 	public void pesquisar() {

@@ -22,6 +22,7 @@ import repository.Clientes;
 import repository.Produtos;
 import repository.Usuarios;
 import service.CadastroPedidoService;
+import service.NegocioException;
 import util.jsf.FacesUtil;
 import validation.SKU;
 
@@ -83,6 +84,8 @@ public class CadastroPedidoBean implements Serializable {
 			this.pedido = this.cadastroPedidoService.salvar(this.pedido);
 		
 			FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
 		} finally {
 			this.pedido.adicionarItemVazio();
 		}

@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import model.Pedido;
 import service.EmissaoPedidoService;
+import service.NegocioException;
 import util.jsf.FacesUtil;
 
 @Named
@@ -16,28 +17,30 @@ import util.jsf.FacesUtil;
 public class EmissaoPedidoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private EmissaoPedidoService emissaoPedidoService;
-	
+
 	@Inject
 	@PedidoEdicao
 	private Pedido pedido;
-	
+
 	@Inject
 	private Event<PedidoAlteradoEvent> pedidoAlteradoEvent;
-	
+
 	public void emitirPedido() {
 		this.pedido.removerItemVazio();
-		
+
 		try {
 			this.pedido = this.emissaoPedidoService.emitir(this.pedido);
 			this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
-			
+
 			FacesUtil.addInfoMessage("Pedido emitido com sucesso!");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
 		} finally {
 			this.pedido.adicionarItemVazio();
 		}
 	}
-	
+
 }
