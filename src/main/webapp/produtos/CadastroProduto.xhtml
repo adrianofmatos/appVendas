@@ -11,8 +11,7 @@
 
 		<f:metadata>
 			<f:viewParam name="produto" value="#{cadastroProdutoBean.produto}" />
-			<f:event listener="#{cadastroProdutoBean.inicializar}"
-				type="preRenderView" />
+			<f:viewAction action="#{cadastroProdutoBean.inicializar}"/>
 		</f:metadata>
 
 		<h:form id="frm">
