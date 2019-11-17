@@ -13,13 +13,11 @@
 
 			<p:toolbar style="margin-top: 20px">
 				<p:toolbarGroup>
-					<p:commandButton value="Pesquisar" id="botaoPesquisar"
-						action="#{pesquisaPedidosBean.pesquisar}" update="@form" />
+					<p:commandButton value="Pesquisar" id="botaoPesquisar" update="@form" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 
-					<p:commandButton value="Exportar para XLS" ajax="false"
-						disabled="#{empty pesquisaPedidosBean.pedidosFiltados}">
+					<p:commandButton value="Exportar para XLS" ajax="false">
 						<p:dataExporter type="xls" target="pedidosTable"
 							fileName="pedidos" />
 					</p:commandButton>
@@ -64,17 +62,19 @@
 			</p:panelGrid>
 
 			<p:dataTable id="pedidosTable"
-				value="#{pesquisaPedidosBean.pedidosFiltados}" var="pedido"
+				value="#{pesquisaPedidosBean.model}" var="pedido"
 				style="margin-top: 20px" emptyMessage="Nenhum produto encontrado."
-				rows="20" paginator="true" paginatorAlwaysVisible="false"
-				paginatorPosition="bottom">
+				rows="2" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				lazy="true">
 
 				<p:column headerText="Número"
-					style="text-align: center; width: 100px">
+					style="text-align: center; width: 100px" 
+					sortBy="#{pedido.id}">
 					<h:outputText value="#{pedido.id}" />
 				</p:column>
 
-				<p:column headerText="Cliente">
+				<p:column headerText="Cliente" sortBy="#{pedido.cliente.nome}">
 					<h:outputText value="#{pedido.cliente.nome}" />
 				</p:column>
 
@@ -90,7 +90,8 @@
 				</p:column>
 
 				<p:column headerText="Valor Total"
-					style="text-align: right; width: 120px">
+					style="text-align: right; width: 120px"
+					sortBy="#{pedido.valorTotal}">
 					<h:outputText value="#{pedido.valorTotal}">
 						<f:convertNumber type="currency" />
 					</h:outputText>
