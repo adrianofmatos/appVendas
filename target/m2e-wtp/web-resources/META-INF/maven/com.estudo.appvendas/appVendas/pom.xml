@@ -12,6 +12,14 @@
 	</properties>
 
 	<dependencies>
+		<!-- Usado para geração de arquivos Excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.11</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<!-- Implementacao do Bean Validation -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -155,7 +163,7 @@
 			<version>6.10.0</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports-fonts -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
